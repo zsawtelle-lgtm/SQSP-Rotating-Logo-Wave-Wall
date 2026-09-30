@@ -35,7 +35,7 @@ Setup is one versioned script tag in Code Injection. Every setting lives in the
 **Advanced → Page Header Code Injection**):
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/zsawtelle-lgtm/SQSP-Rotating-Logo-Wave-Wall@1.0.0/dist/waves.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/zsawtelle-lgtm/SQSP-Rotating-Logo-Wave-Wall@1.1.0/dist/waves.min.js"></script>
 ```
 
 The script loads GSAP and its own base styles. Nothing else goes here.
@@ -90,7 +90,36 @@ page loads, so refresh after changing them.
 | `--lw-pad` | `10px` | Padding around each logo |
 | `--lw-bg` | `transparent` | Slot background colour |
 
-Look toggles are ordinary CSS, so they also work inside media queries in the CSS pane.
+### Look on mobile
+
+Each look toggle has a `-mobile` version that applies at or below
+`--lw-mobile-breakpoint` (the same point where `--lw-count-mobile` kicks in).
+Leave one out and mobile uses the desktop value.
+
+| Toggle | Falls back to |
+| --- | --- |
+| `--lw-gap-mobile` | `--lw-gap` |
+| `--lw-max-width-mobile` | `--lw-max-width` |
+| `--lw-ratio-mobile` | `--lw-ratio` |
+| `--lw-fit-mobile` | `--lw-fit` |
+| `--lw-radius-mobile` | `--lw-radius` |
+| `--lw-pad-mobile` | `--lw-pad` |
+| `--lw-bg-mobile` | `--lw-bg` |
+
+```css
+[data-section-id="6abc8879e923b123d6550a4f"] {
+  --lw-wave: on;
+  --lw-gap: 11px;
+  --lw-gap-mobile: 0px;   /* no gap on mobile */
+  --lw-pad-mobile: 4px;
+}
+```
+
+**Selector tip:** always write toggles as `[data-section-id="…"]`, not
+`section[data-section-id="…"]`. Squarespace puts the same `data-section-id` on
+the list's inner wrapper too, and a value set there beats one set on the outer
+`<section>`. That's why a `section[…]` override inside your own media query won't
+take effect without `!important`.
 
 ## How it behaves
 
@@ -104,16 +133,16 @@ Look toggles are ordinary CSS, so they also work inside media queries in the CSS
 
 ## Versioning and releases
 
-The Code Injection URL pins a version (`@1.0.0`), and jsDelivr caches each version
+The Code Injection URL pins a version (`@1.1.0`), and jsDelivr caches each version
 permanently. A live site only changes when you edit the version number in the
 script tag.
 
 To release a new version:
 
-1. Edit `src/`, then bump `version` in `package.json` (e.g. `1.0.1`).
+1. Edit `src/`, then bump `version` in `package.json` (e.g. `1.2.0`).
 2. `npm install` (first time only), then `npm run build`.
-3. Commit, merge to `main`, and create a GitHub release/tag named `v1.0.1`.
-4. Update the site's script tag to `@1.0.1`.
+3. Commit, merge to `main`, and create a GitHub release with a tag of the same number (`1.2.0`).
+4. Update the site's script tag to `@1.2.0`.
 
 ## Development
 

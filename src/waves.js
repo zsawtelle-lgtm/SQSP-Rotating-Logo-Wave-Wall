@@ -142,20 +142,20 @@
 
   /* ---------- Wall ---------- */
 
-  function columnCount(wrap) {
-    const s = wrap._settings;
-    return window.matchMedia("(max-width: " + s.mobileBreakpoint + "px)").matches
-      ? s.mobileCount
-      : s.desktopCount;
+  function isMobile(wrap) {
+    return window.matchMedia("(max-width: " + wrap._settings.mobileBreakpoint + "px)").matches;
   }
 
   function renderSlots(wrap) {
     const images = wrap._images;
-    const cols = columnCount(wrap);
+    const mobile = isMobile(wrap);
+    const cols = mobile ? wrap._settings.mobileCount : wrap._settings.desktopCount;
     if (window.gsap) { try { gsap.killTweensOf(wrap.querySelectorAll("img")); } catch (e) {} }
     wrap.innerHTML = "";
     wrap.style.gridTemplateColumns = "repeat(" + cols + ", minmax(0, 1fr))";
-    wrap._cols = cols;
+    // Switches the --lw-*-mobile look toggles on at the same breakpoint as the count
+    wrap.classList.toggle("sk-logo-wave--mobile", mobile);
+    wrap._mobile = mobile;
     wrap._slots = [];
 
     // Column c cycles through images c, c+cols, c+2*cols, ...
@@ -247,7 +247,7 @@
       clearTimeout(resizeTimer);
       resizeTimer = setTimeout(function () {
         state.nodes.forEach(function (wrap) {
-          if (columnCount(wrap) !== wrap._cols) renderSlots(wrap);
+          if (isMobile(wrap) !== wrap._mobile) renderSlots(wrap);
         });
       }, 150);
     });
