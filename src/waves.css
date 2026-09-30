@@ -1,0 +1,27 @@
+/* Base styles, injected by waves.js. Every value reads a --lw-* toggle, so
+   set toggles in Squarespace's CSS pane and they win without !important. */
+.sk-logo-wave{
+  display: grid;
+  gap: var(--lw-gap, 11px);
+  width: var(--lw-max-width, 100%);
+  margin: 0 auto;
+  list-style: none;
+  padding: 0;
+}
+.sk-logo-wave__slot{
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: var(--lw-ratio, 1.3);
+  border-radius: var(--lw-radius, 6px);
+  background: var(--lw-bg, transparent);
+}
+.sk-logo-wave__slot img{
+  position: absolute;
+  top: var(--lw-pad, 10px);
+  left: var(--lw-pad, 10px);
+  width: calc(100% - (var(--lw-pad, 10px) * 2));
+  height: calc(100% - (var(--lw-pad, 10px) * 2));
+  object-fit: var(--lw-fit, cover);
+  display: block;
+  will-change: transform, opacity;
+}

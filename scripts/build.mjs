@@ -1,24 +1,27 @@
-// Bundles src/ into a single snippet for Squarespace Code Injection.
-// Usage: node scripts/build.mjs
+// Builds dist/waves.js and dist/waves.min.js from src/.
+// Usage: npm run build
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { minify } from 'terser';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
-const css = readFileSync(join(root, 'src/logo-wave.css'), 'utf8').trim();
-const js = readFileSync(join(root, 'src/logo-wave.js'), 'utf8').trim();
+const read = (p) => readFileSync(join(root, p), 'utf8');
+const { version } = JSON.parse(read('package.json'));
 
-const snippet = `<!-- Rotating Logo Wave Wall. Paste into a page's Advanced > Page Header Code Injection,
-     or Settings > Advanced > Code Injection > Footer. Generated from src/ by scripts/build.mjs. -->
-<style>
-${css}
-</style>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
-<script>
-${js}
-</script>
-`;
+const css = read('src/waves.css')
+  .replace(/\/\*[\s\S]*?\*\//g, '')
+  .replace(/\s+/g, ' ')
+  .replace(/\s*([{}:;,])\s*/g, '$1')
+  .trim();
+
+const js = read('src/waves.js')
+  .replaceAll('__VERSION__', version)
+  .replace('"__CSS__"', JSON.stringify(css));
+
+const min = await minify(js, { format: { comments: /^!/ } });
 
 mkdirSync(join(root, 'dist'), { recursive: true });
-writeFileSync(join(root, 'dist/code-injection.html'), snippet);
-console.log('Wrote dist/code-injection.html');
+writeFileSync(join(root, 'dist/waves.js'), js);
+writeFileSync(join(root, 'dist/waves.min.js'), min.code + '\n');
+console.log(`Built waves v${version}: dist/waves.js, dist/waves.min.js`);
