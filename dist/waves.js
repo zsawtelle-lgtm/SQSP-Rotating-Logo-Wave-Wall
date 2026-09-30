@@ -1,8 +1,8 @@
-/*! Squarespace Logo Wave Wall v1.0.0 | https://github.com/zsawtelle-lgtm/SQSP-Rotating-Logo-Wave-Wall */
+/*! Squarespace Logo Wave Wall v1.1.0 | https://github.com/zsawtelle-lgtm/SQSP-Rotating-Logo-Wave-Wall */
 (function () {
-  const VERSION = "1.0.0";
+  const VERSION = "1.1.0";
   const GSAP_SRC = "https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js";
-  const BASE_CSS = ".sk-logo-wave{display:grid;gap:var(--lw-gap,11px);width:var(--lw-max-width,100%);margin:0 auto;list-style:none;padding:0;}.sk-logo-wave__slot{position:relative;overflow:hidden;aspect-ratio:var(--lw-ratio,1.3);border-radius:var(--lw-radius,6px);background:var(--lw-bg,transparent);}.sk-logo-wave__slot img{position:absolute;top:var(--lw-pad,10px);left:var(--lw-pad,10px);width:calc(100% - (var(--lw-pad,10px) * 2));height:calc(100% - (var(--lw-pad,10px) * 2));object-fit:var(--lw-fit,cover);display:block;will-change:transform,opacity;}";
+  const BASE_CSS = ".sk-logo-wave{--_gap:var(--lw-gap,11px);--_max-width:var(--lw-max-width,100%);--_ratio:var(--lw-ratio,1.3);--_fit:var(--lw-fit,cover);--_radius:var(--lw-radius,6px);--_pad:var(--lw-pad,10px);--_bg:var(--lw-bg,transparent);display:grid;gap:var(--_gap);width:var(--_max-width);margin:0 auto;list-style:none;padding:0;}.sk-logo-wave--mobile{--_gap:var(--lw-gap-mobile,var(--lw-gap,11px));--_max-width:var(--lw-max-width-mobile,var(--lw-max-width,100%));--_ratio:var(--lw-ratio-mobile,var(--lw-ratio,1.3));--_fit:var(--lw-fit-mobile,var(--lw-fit,cover));--_radius:var(--lw-radius-mobile,var(--lw-radius,6px));--_pad:var(--lw-pad-mobile,var(--lw-pad,10px));--_bg:var(--lw-bg-mobile,var(--lw-bg,transparent));}.sk-logo-wave__slot{position:relative;overflow:hidden;aspect-ratio:var(--_ratio);border-radius:var(--_radius);background:var(--_bg);}.sk-logo-wave__slot img{position:absolute;top:var(--_pad);left:var(--_pad);width:calc(100% - (var(--_pad) * 2));height:calc(100% - (var(--_pad) * 2));object-fit:var(--_fit);display:block;will-change:transform,opacity;}";
 
   // Simple List (Auto Layout) item containers. A container becomes a wave wall
   // when the CSS pane sets `--lw-wave: on` on it or its section.
@@ -142,20 +142,20 @@
 
   /* ---------- Wall ---------- */
 
-  function columnCount(wrap) {
-    const s = wrap._settings;
-    return window.matchMedia("(max-width: " + s.mobileBreakpoint + "px)").matches
-      ? s.mobileCount
-      : s.desktopCount;
+  function isMobile(wrap) {
+    return window.matchMedia("(max-width: " + wrap._settings.mobileBreakpoint + "px)").matches;
   }
 
   function renderSlots(wrap) {
     const images = wrap._images;
-    const cols = columnCount(wrap);
+    const mobile = isMobile(wrap);
+    const cols = mobile ? wrap._settings.mobileCount : wrap._settings.desktopCount;
     if (window.gsap) { try { gsap.killTweensOf(wrap.querySelectorAll("img")); } catch (e) {} }
     wrap.innerHTML = "";
     wrap.style.gridTemplateColumns = "repeat(" + cols + ", minmax(0, 1fr))";
-    wrap._cols = cols;
+    // Switches the --lw-*-mobile look toggles on at the same breakpoint as the count
+    wrap.classList.toggle("sk-logo-wave--mobile", mobile);
+    wrap._mobile = mobile;
     wrap._slots = [];
 
     // Column c cycles through images c, c+cols, c+2*cols, ...
@@ -247,7 +247,7 @@
       clearTimeout(resizeTimer);
       resizeTimer = setTimeout(function () {
         state.nodes.forEach(function (wrap) {
-          if (columnCount(wrap) !== wrap._cols) renderSlots(wrap);
+          if (isMobile(wrap) !== wrap._mobile) renderSlots(wrap);
         });
       }, 150);
     });
