@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Logo Wave Wall Demo</title>
+  <style>
+    body { margin: 0; font-family: system-ui, sans-serif; background: #fff; color: #1f2328; }
+    .user-items-list { max-width: 1200px; margin: 0 auto; padding: 48px 16px; }
+    .list-section-title { text-align: center; }
+    .user-items-list-item-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; list-style: none; padding: 0; }
+    .list-item-media img { width: 100%; }
+  </style>
+  <!-- Stands in for Squarespace's Design > Custom CSS pane -->
+  <style>
+    [data-section-id="demo-logos"] {
+      --lw-wave: on;
+      --lw-fit: contain; /* demo logos are wide wordmarks */
+    }
+  </style>
+</head>
+<body>
+  <!-- Mirrors the markup Squarespace renders for a List Section in Simple layout -->
+  <section class="page-section user-items-list-section" data-section-id="demo-logos">
+    <div class="user-items-list">
+      <div class="list-section-title"><h2>Trusted by</h2><p>10 logos: position 1 rotates logos 1 &amp; 6, position 2 rotates 2 &amp; 7, and so on.</p></div>
+      <div class="user-items-list-simple" data-section-id="demo-logos">
+        <ul class="user-items-list-item-container user-items-list-simple" data-section-id="demo-logos">
+          <li class="list-item"><div class="list-item-media"><div class="list-item-media-inner"><img data-src="logos/logo-1.svg" src="logos/logo-1.svg" alt="Client logo 1"></div></div></li>
+          <li class="list-item"><div class="list-item-media"><div class="list-item-media-inner"><img data-src="logos/logo-2.svg" src="logos/logo-2.svg" alt="Client logo 2"></div></div></li>
+          <li class="list-item"><div class="list-item-media"><div class="list-item-media-inner"><img data-src="logos/logo-3.svg" src="logos/logo-3.svg" alt="Client logo 3"></div></div></li>
+          <li class="list-item"><div class="list-item-media"><div class="list-item-media-inner"><img data-src="logos/logo-4.svg" src="logos/logo-4.svg" alt="Client logo 4"></div></div></li>
+          <li class="list-item"><div class="list-item-media"><div class="list-item-media-inner"><img data-src="logos/logo-5.svg" src="logos/logo-5.svg" alt="Client logo 5"></div></div></li>
+          <li class="list-item"><div class="list-item-media"><div class="list-item-media-inner"><img data-src="logos/logo-6.svg" src="logos/logo-6.svg" alt="Client logo 6"></div></div></li>
+          <li class="list-item"><div class="list-item-media"><div class="list-item-media-inner"><img data-src="logos/logo-7.svg" src="logos/logo-7.svg" alt="Client logo 7"></div></div></li>
+          <li class="list-item"><div class="list-item-media"><div class="list-item-media-inner"><img data-src="logos/logo-8.svg" src="logos/logo-8.svg" alt="Client logo 8"></div></div></li>
+          <li class="list-item"><div class="list-item-media"><div class="list-item-media-inner"><img data-src="logos/logo-9.svg" src="logos/logo-9.svg" alt="Client logo 9"></div></div></li>
+          <li class="list-item"><div class="list-item-media"><div class="list-item-media-inner"><img data-src="logos/logo-10.svg" src="logos/logo-10.svg" alt="Client logo 10"></div></div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- A second Simple List without --lw-wave: must be left untouched -->
+  <section class="page-section user-items-list-section" data-section-id="other-list">
+    <div class="user-items-list">
+      <ul class="user-items-list-item-container user-items-list-simple" data-section-id="other-list">
+        <li class="list-item"><div class="list-item-media"><img src="logos/logo-11.svg" alt=""></div><p>Regular list item (not converted)</p></li>
+        <li class="list-item"><div class="list-item-media"><img src="logos/logo-12.svg" alt=""></div><p>Regular list item (not converted)</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- On Squarespace this is the only Code Injection line -->
+  <script src="../dist/waves.js"></script>
+</body>
+</html>

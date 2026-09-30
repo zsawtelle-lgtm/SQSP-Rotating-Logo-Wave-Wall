@@ -1,0 +1,14 @@
+{
+  "name": "sqsp-rotating-logo-wave-wall",
+  "version": "1.0.0",
+  "description": "Turns a Squarespace Simple List section into a rotating, staggered wave logo wall.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs"
+  },
+  "devDependencies": {
+    "terser": "^5.36.0"
+  },
+  "license": "MIT"
+}

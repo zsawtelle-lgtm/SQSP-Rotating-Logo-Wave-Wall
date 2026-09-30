@@ -1,0 +1,28 @@
+/* ==========================================================
+   Logo Wave Wall: paste into Design > Custom CSS
+   Replace the section ID with your Simple List section's ID.
+   Delete any line to use its default.
+   ========================================================== */
+[data-section-id="6abc8879e923b123d6550a4f"] {
+  --lw-wave: on;                /* turns this section into a wave wall */
+
+  /* Motion */
+  --lw-count: 5;                /* logos visible on desktop */
+  --lw-count-mobile: 3;         /* logos visible on mobile */
+  --lw-mobile-breakpoint: 767;  /* px, at or below uses the mobile count */
+  --lw-interval: 3.5s;          /* time between sets */
+  --lw-stagger: 0.2s;           /* delay between each position (the wave) */
+  --lw-duration: 0.55s;         /* slide/fade length */
+  --lw-travel: 35px;            /* slide distance */
+  --lw-ease: power2.out;        /* any GSAP ease */
+  --lw-pause-on-hover: on;      /* on / off */
+
+  /* Look */
+  --lw-gap: 11px;               /* space between logos */
+  --lw-max-width: 100%;         /* width of the whole wall */
+  --lw-ratio: 1.3;              /* slot shape (width / height) */
+  --lw-fit: cover;              /* cover = fill slot, contain = whole logo */
+  --lw-radius: 6px;             /* slot corner radius */
+  --lw-pad: 10px;               /* padding around each logo */
+  --lw-bg: transparent;         /* slot background */
+}
